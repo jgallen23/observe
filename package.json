@@ -1,0 +1,22 @@
+{
+  "name": "vents",
+  "description": "an event lib for node and browser",
+  "homepage": "https://github.com/jgallen23/vents",
+  "author": "Greg Allen <@jgaui> (http://jga.me)",
+  "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jgallen23/vents.git"
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+    "mocha": "*"
+  },
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "bin": {
+  }
+}
