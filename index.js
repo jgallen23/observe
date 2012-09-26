@@ -21,14 +21,16 @@ Vents.prototype.on = function(event, fn) {
 
 }
 
-Vents.prototype.emit = function(event, data) {
+Vents.prototype.emit = function() {
+  var args = Array.prototype.slice.call(arguments);
+  var event = args.shift();
   if (!this.hasHandlers(event)) {
     return;
   }
 
   for (var i = 0, c = this._handlers[event].length; i < c; i++) {
     var fn = this._handlers[event][i];
-    fn(data);
+    fn.apply(this, args);
   }
 }
 

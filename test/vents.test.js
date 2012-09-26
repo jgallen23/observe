@@ -36,6 +36,23 @@ suite('vents', function() {
       
     });
 
+    test('should pass any amount of data from emit', function() {
+
+      var vents = new Vents();
+      var data;
+
+      vents.on('test', function(arg1, arg2) {
+        data = arguments;
+      });
+
+      vents.emit('test', 123, 456);
+
+      assert.equal(data.length, 2); 
+      assert.equal(data[0], 123); 
+      assert.equal(data[1], 456); 
+      
+    });
+
     test('should return handler', function() {
       var vents = new Vents();
 
