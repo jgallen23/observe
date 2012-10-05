@@ -108,6 +108,25 @@ suite('vents', function() {
       
     });
 
+
+    test('if nothing passed, remove all events', function() {
+      var calls = 0;
+      var vents = new Vents();
+
+      var handler = vents.on('test', function() {
+        calls++;
+      });
+      var handler2 = vents.on('test', function() {
+        calls++;
+      });
+
+      vents.emit('test');
+      vents.off();
+      vents.emit('test');
+      assert.equal(calls, 2);
+      
+    });
+
   });
 
   suite('#once', function() {

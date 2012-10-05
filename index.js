@@ -35,9 +35,15 @@ Vents.prototype.emit = function() {
 }
 
 Vents.prototype.off = function(event, handler) {
+  if (arguments.length == 0) {
+    this._handlers = {};
+    return;
+  }
+
   if (!this.hasHandlers(event)) {
     return;
   }
+
   if (arguments.length == 1) {
     delete this._handlers[event];
     return;
