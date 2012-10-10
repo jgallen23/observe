@@ -1,4 +1,10 @@
 
+0.0.3 / 2012-10-10 
+==================
+
+  * added built in support for setting context of events
+  * renamed vents to subs
+
 0.0.2 / 2012-10-05 
 ==================
 
