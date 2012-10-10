@@ -1,3 +1,4 @@
+var currie = require('currie');
 
 var Subs = function(obj) {
   if (obj) {
@@ -10,11 +11,12 @@ var Subs = function(obj) {
   this._handlers = {};
 }
 
-Subs.prototype.on = function(event, fn) {
+Subs.prototype.on = function(event, fn, context) {
   if (!this._handlers[event]) {
     this._handlers[event] = [];
   }
 
+  fn = (context) ? currie(fn, context) : fn;
   this._handlers[event].push(fn);
 
   return fn;

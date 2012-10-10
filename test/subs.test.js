@@ -62,6 +62,30 @@ suite('subs', function() {
 
       assert.equal(typeof handler, 'function');
     });
+
+    test('pass in 3rd param to set context', function() {
+
+      var subs = new Subs();
+
+      var Class = function() {
+        this.subs = new Subs();
+
+        this.subs.on('event', this.method, this);
+      }
+      Class.prototype.method = function(val) {
+        this.methodCalled = true;
+        this.methodContext = this;
+        this.methodVal = val;
+      }
+
+      var cls = new Class();
+      cls.subs.emit('event', 123);
+
+      assert.equal(cls.methodCalled, true);
+      assert.equal(cls.methodContext, cls);
+      assert.equal(cls.methodVal, 123);
+
+    });
     
   });
 

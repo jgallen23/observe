@@ -9,6 +9,7 @@
     "url": "https://github.com/jgallen23/vents.git"
   },
   "dependencies": {
+    "currie": "0.0.2"
   },
   "devDependencies": {
     "mocha": "*"
