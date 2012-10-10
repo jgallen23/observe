@@ -1,16 +1,16 @@
 
-var Vents = function(obj) {
+var Subs = function(obj) {
   if (obj) {
     obj._handlers = {};
-    for (var key in Vents.prototype) {
-      obj[key] = Vents.prototype[key];
+    for (var key in Subs.prototype) {
+      obj[key] = Subs.prototype[key];
     }
     return obj;
   }
   this._handlers = {};
 }
 
-Vents.prototype.on = function(event, fn) {
+Subs.prototype.on = function(event, fn) {
   if (!this._handlers[event]) {
     this._handlers[event] = [];
   }
@@ -21,7 +21,7 @@ Vents.prototype.on = function(event, fn) {
 
 }
 
-Vents.prototype.emit = function() {
+Subs.prototype.emit = function() {
   var args = Array.prototype.slice.call(arguments);
   var event = args.shift();
   if (!this.hasHandlers(event)) {
@@ -34,7 +34,7 @@ Vents.prototype.emit = function() {
   }
 }
 
-Vents.prototype.off = function(event, handler) {
+Subs.prototype.off = function(event, handler) {
   if (arguments.length == 0) {
     this._handlers = {};
     return;
@@ -56,7 +56,7 @@ Vents.prototype.off = function(event, handler) {
 
 }
 
-Vents.prototype.once = function(event, handler) {
+Subs.prototype.once = function(event, handler) {
   var self = this;
   var onceHandler = this.on(event, function(data) {
     handler(data);
@@ -64,11 +64,11 @@ Vents.prototype.once = function(event, handler) {
   });
 }
 
-Vents.prototype.hasHandlers = function(event) {
+Subs.prototype.hasHandlers = function(event) {
   return !! this._handlers[event];
 
 }
 
 if (typeof window === "undefined") {
-  module.exports = Vents;
+  module.exports = Subs;
 }

@@ -1,36 +1,36 @@
 var assert = require('assert');
-var Vents = require('../');
+var Subs = require('../');
 
-suite('vents', function() {
+suite('subs', function() {
 
   suite('#on', function() {
 
     test('should add listeners', function() {
 
-      var vents = new Vents();
+      var subs = new Subs();
       var calls = 0;
-      vents.on('test', function() {
+      subs.on('test', function() {
         calls++;
       });
-      vents.on('test', function() {
+      subs.on('test', function() {
         calls++;
       });
 
-      vents.emit('test');
+      subs.emit('test');
       assert.equal(calls, 2);
       
     });
 
     test('should pass data from emit', function() {
 
-      var vents = new Vents();
+      var subs = new Subs();
       var data;
 
-      vents.on('test', function(arg) {
+      subs.on('test', function(arg) {
         data = arg;
       });
 
-      vents.emit('test', 123);
+      subs.emit('test', 123);
 
       assert.equal(data, 123); 
       
@@ -38,14 +38,14 @@ suite('vents', function() {
 
     test('should pass any amount of data from emit', function() {
 
-      var vents = new Vents();
+      var subs = new Subs();
       var data;
 
-      vents.on('test', function(arg1, arg2) {
+      subs.on('test', function(arg1, arg2) {
         data = arguments;
       });
 
-      vents.emit('test', 123, 456);
+      subs.emit('test', 123, 456);
 
       assert.equal(data.length, 2); 
       assert.equal(data[0], 123); 
@@ -54,9 +54,9 @@ suite('vents', function() {
     });
 
     test('should return handler', function() {
-      var vents = new Vents();
+      var subs = new Subs();
 
-      var handler = vents.on('test', function() {
+      var handler = subs.on('test', function() {
 
       });
 
@@ -68,7 +68,7 @@ suite('vents', function() {
   suite('#emit', function() {
     test('no errors if emitting an event that isn\'t bound', function() {
 
-      var vent = new Vents();
+      var vent = new Subs();
       vent.emit('blah');
       
     });
@@ -78,51 +78,51 @@ suite('vents', function() {
 
     test('should remove listener', function() {
       var calls = 0;
-      var vents = new Vents();
+      var subs = new Subs();
 
-      var handler = vents.on('test', function() {
+      var handler = subs.on('test', function() {
         calls++;
       });
 
-      vents.emit('test');
-      vents.off('test', handler);
-      vents.emit('test');
+      subs.emit('test');
+      subs.off('test', handler);
+      subs.emit('test');
       assert.equal(calls, 1);
     });
 
     test('if no handler passed, remove all listeners', function() {
       var calls = 0;
-      var vents = new Vents();
+      var subs = new Subs();
 
-      var handler = vents.on('test', function() {
+      var handler = subs.on('test', function() {
         calls++;
       });
-      var handler2 = vents.on('test', function() {
+      var handler2 = subs.on('test', function() {
         calls++;
       });
 
-      vents.emit('test');
-      vents.off('test');
-      vents.emit('test');
+      subs.emit('test');
+      subs.off('test');
+      subs.emit('test');
       assert.equal(calls, 2);
       
     });
 
 
-    test('if nothing passed, remove all events', function() {
+    test('if nothing passed, remove all esubs', function() {
       var calls = 0;
-      var vents = new Vents();
+      var subs = new Subs();
 
-      var handler = vents.on('test', function() {
+      var handler = subs.on('test', function() {
         calls++;
       });
-      var handler2 = vents.on('test', function() {
+      var handler2 = subs.on('test', function() {
         calls++;
       });
 
-      vents.emit('test');
-      vents.off();
-      vents.emit('test');
+      subs.emit('test');
+      subs.off();
+      subs.emit('test');
       assert.equal(calls, 2);
       
     });
@@ -134,13 +134,13 @@ suite('vents', function() {
     test('should only fire event once', function() {
 
       var calls = 0;
-      var vents = new Vents();
+      var subs = new Subs();
 
-      vents.once('test', function() {
+      subs.once('test', function() {
         calls++;
       });
-      vents.emit('test');
-      vents.emit('test');
+      subs.emit('test');
+      subs.emit('test');
 
       assert.equal(calls, 1);
       
@@ -152,16 +152,16 @@ suite('vents', function() {
 
     test('should return true if something is bound', function() {
 
-      var vents = new Vents();
-      vents.on('test', function() {});
+      var subs = new Subs();
+      subs.on('test', function() {});
 
-      assert.ok(vents.hasHandlers('test'));
+      assert.ok(subs.hasHandlers('test'));
     });
 
     test('should return false if nothing is bound', function() {
-      var vents = new Vents();
+      var subs = new Subs();
 
-      assert.equal(vents.hasHandlers('test'), false);
+      assert.equal(subs.hasHandlers('test'), false);
     });
     
   });
@@ -170,7 +170,7 @@ suite('vents', function() {
   suite('mixin', function(done) {
     test('should add to object', function(done) {
       var obj = {};
-      Vents(obj);
+      Subs(obj);
       assert.equal(typeof obj.on, 'function');
       assert.equal(typeof obj.off, 'function');
       obj.on('test', done);
@@ -179,10 +179,10 @@ suite('vents', function() {
 
     test('should add to prototype', function(done) {
       var Class = function() {
-        Vents.call(this);
+        Subs.call(this);
       }
 
-      Vents(Class.prototype);
+      Subs(Class.prototype);
       var cls = new Class();
       assert.equal(typeof cls.on, 'function');
       assert.equal(typeof cls.off, 'function');
