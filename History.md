@@ -1,4 +1,9 @@
 
+0.0.4 / 2012-10-11 
+==================
+
+  * swapped window checking with module checking
+
 0.0.3 / 2012-10-10 
 ==================
 
