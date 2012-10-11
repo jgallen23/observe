@@ -71,6 +71,6 @@ Subs.prototype.hasHandlers = function(event) {
 
 }
 
-if (typeof window === "undefined") {
+if (typeof module === "object" && module.exports) {
   module.exports = Subs;
 }
