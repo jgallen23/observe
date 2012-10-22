@@ -58,12 +58,13 @@ Subs.prototype.off = function(event, handler) {
 
 }
 
-Subs.prototype.once = function(event, handler) {
+Subs.prototype.once = function(event, handler, context) {
   var self = this;
-  var onceHandler = this.on(event, function(data) {
-    handler(data);
+  var onceHandler = this.on(event, function() {
+    handler.apply(context, arguments);
     self.off(event, onceHandler);
   });
+  return onceHandler;
 }
 
 Subs.prototype.hasHandlers = function(event) {

@@ -65,8 +65,6 @@ suite('subs', function() {
 
     test('pass in 3rd param to set context', function() {
 
-      var subs = new Subs();
-
       var Class = function() {
         this.subs = new Subs();
 
@@ -168,6 +166,86 @@ suite('subs', function() {
 
       assert.equal(calls, 1);
       
+    });
+
+    test('should return fn', function() {
+
+      var subs = new Subs();
+      var fn = function() { };
+
+      var ret = subs.once('test', fn);
+
+      assert.equal(typeof ret, 'function');
+      
+    });
+
+    test('should not be called if off is called before', function() {
+
+      var subs = new Subs();
+      var fn = function() { };
+
+      var ret = subs.once('test', fn);
+      subs.off('test', ret);
+
+      var called = 0;
+      subs.emit('test');
+
+      assert.equal(called, 0);
+      
+    });
+
+    test('should pass data from emit', function() {
+
+      var subs = new Subs();
+      var data;
+
+      subs.once('test', function(arg) {
+        data = arg;
+      });
+
+      subs.emit('test', 123);
+
+      assert.equal(data, 123); 
+      
+    });
+
+    test('should pass any amount of data from emit', function() {
+
+      var subs = new Subs();
+      var data;
+
+      subs.once('test', function(arg1, arg2) {
+        data = arguments;
+      });
+
+      subs.emit('test', 123, 456);
+
+      assert.equal(data.length, 2); 
+      assert.equal(data[0], 123); 
+      assert.equal(data[1], 456); 
+      
+    });
+
+    test('pass in 3rd param to set context', function() {
+
+      var Klass = function() {
+        this.subs = new Subs();
+
+        this.subs.once('event', this.method, this);
+      }
+      Klass.prototype.method = function(val) {
+        this.methodCalled = true;
+        this.methodContext = this;
+        this.methodVal = val;
+      }
+
+      var cls = new Klass();
+      cls.subs.emit('event', 123);
+
+      assert.equal(cls.methodCalled, true);
+      assert.equal(cls.methodContext, cls);
+      assert.equal(cls.methodVal, 123);
+
     });
     
   });
