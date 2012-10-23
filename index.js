@@ -32,7 +32,9 @@ Subs.prototype.emit = function() {
 
   for (var i = 0, c = this._handlers[event].length; i < c; i++) {
     var fn = this._handlers[event][i];
-    fn.apply(this, args);
+    if (fn) {
+      fn.apply(this, args);
+    }
   }
 }
 
