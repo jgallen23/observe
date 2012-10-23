@@ -1,4 +1,12 @@
 
+0.0.5 / 2012-10-23 
+==================
+
+  * updated currie dep
+  * check if fn exists
+  * added context to once, returned handler
+  * updated exports
+
 0.0.4 / 2012-10-11 
 ==================
 
