@@ -1,4 +1,11 @@
 
+0.0.6 / 2012-11-06 
+==================
+
+  * added component.json for bower
+  * grunt, dist, clientside, jslint
+  * renamed subs to observe
+
 0.0.5 / 2012-10-23 
 ==================
 

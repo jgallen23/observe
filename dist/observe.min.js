@@ -1,6 +1,6 @@
 /*!
  * observe - an event lib for node and browser
- * v0.0.5
+ * v0.0.6
  * https://github.com/jgallen23/observe
  * copyright  2012
  * MIT License

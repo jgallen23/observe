@@ -3,7 +3,7 @@
   "description": "an event lib for node and browser",
   "homepage": "https://github.com/jgallen23/observe",
   "author": "Greg Allen <@jgaui> (http://jga.me)",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "license": "MIT",
   "company": "JGA",
   "repository": {
