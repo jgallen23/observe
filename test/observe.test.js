@@ -69,12 +69,12 @@ suite('observe', function() {
         this.observe = new Observe();
 
         this.observe.on('event', this.method, this);
-      }
+      };
       Class.prototype.method = function(val) {
         this.methodCalled = true;
         this.methodContext = this;
         this.methodVal = val;
-      }
+      };
 
       var cls = new Class();
       cls.observe.emit('event', 123);
@@ -232,12 +232,12 @@ suite('observe', function() {
         this.observe = new Observe();
 
         this.observe.once('event', this.method, this);
-      }
+      };
       Klass.prototype.method = function(val) {
         this.methodCalled = true;
         this.methodContext = this;
         this.methodVal = val;
-      }
+      };
 
       var cls = new Klass();
       cls.observe.emit('event', 123);
@@ -282,7 +282,7 @@ suite('observe', function() {
     test('should add to prototype', function(done) {
       var Class = function() {
         Observe.call(this);
-      }
+      };
 
       Observe(Class.prototype);
       var cls = new Class();

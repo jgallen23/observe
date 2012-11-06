@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+  <meta charset="utf-8" />
+  <head>
+    <title></title>
+  </head>
+  <body>
+    <script src="../dist/observe.min.js"></script>
+    <script>
+      var ob = new Observe();
+      ob.on('test', function() {
+        console.log('emitted');
+      });
+      ob.emit('test');
+    </script>
+
+  </body>
+</html>
