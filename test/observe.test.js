@@ -1,36 +1,36 @@
 var assert = require('assert');
-var Subs = require('../');
+var Observe = require('../');
 
-suite('subs', function() {
+suite('observe', function() {
 
   suite('#on', function() {
 
     test('should add listeners', function() {
 
-      var subs = new Subs();
+      var observe = new Observe();
       var calls = 0;
-      subs.on('test', function() {
+      observe.on('test', function() {
         calls++;
       });
-      subs.on('test', function() {
+      observe.on('test', function() {
         calls++;
       });
 
-      subs.emit('test');
+      observe.emit('test');
       assert.equal(calls, 2);
       
     });
 
     test('should pass data from emit', function() {
 
-      var subs = new Subs();
+      var observe = new Observe();
       var data;
 
-      subs.on('test', function(arg) {
+      observe.on('test', function(arg) {
         data = arg;
       });
 
-      subs.emit('test', 123);
+      observe.emit('test', 123);
 
       assert.equal(data, 123); 
       
@@ -38,14 +38,14 @@ suite('subs', function() {
 
     test('should pass any amount of data from emit', function() {
 
-      var subs = new Subs();
+      var observe = new Observe();
       var data;
 
-      subs.on('test', function(arg1, arg2) {
+      observe.on('test', function(arg1, arg2) {
         data = arguments;
       });
 
-      subs.emit('test', 123, 456);
+      observe.emit('test', 123, 456);
 
       assert.equal(data.length, 2); 
       assert.equal(data[0], 123); 
@@ -54,9 +54,9 @@ suite('subs', function() {
     });
 
     test('should return handler', function() {
-      var subs = new Subs();
+      var observe = new Observe();
 
-      var handler = subs.on('test', function() {
+      var handler = observe.on('test', function() {
 
       });
 
@@ -66,9 +66,9 @@ suite('subs', function() {
     test('pass in 3rd param to set context', function() {
 
       var Class = function() {
-        this.subs = new Subs();
+        this.observe = new Observe();
 
-        this.subs.on('event', this.method, this);
+        this.observe.on('event', this.method, this);
       }
       Class.prototype.method = function(val) {
         this.methodCalled = true;
@@ -77,7 +77,7 @@ suite('subs', function() {
       }
 
       var cls = new Class();
-      cls.subs.emit('event', 123);
+      cls.observe.emit('event', 123);
 
       assert.equal(cls.methodCalled, true);
       assert.equal(cls.methodContext, cls);
@@ -90,7 +90,7 @@ suite('subs', function() {
   suite('#emit', function() {
     test('no errors if emitting an event that isn\'t bound', function() {
 
-      var vent = new Subs();
+      var vent = new Observe();
       vent.emit('blah');
       
     });
@@ -100,51 +100,51 @@ suite('subs', function() {
 
     test('should remove listener', function() {
       var calls = 0;
-      var subs = new Subs();
+      var observe = new Observe();
 
-      var handler = subs.on('test', function() {
+      var handler = observe.on('test', function() {
         calls++;
       });
 
-      subs.emit('test');
-      subs.off('test', handler);
-      subs.emit('test');
+      observe.emit('test');
+      observe.off('test', handler);
+      observe.emit('test');
       assert.equal(calls, 1);
     });
 
     test('if no handler passed, remove all listeners', function() {
       var calls = 0;
-      var subs = new Subs();
+      var observe = new Observe();
 
-      var handler = subs.on('test', function() {
+      var handler = observe.on('test', function() {
         calls++;
       });
-      var handler2 = subs.on('test', function() {
+      var handler2 = observe.on('test', function() {
         calls++;
       });
 
-      subs.emit('test');
-      subs.off('test');
-      subs.emit('test');
+      observe.emit('test');
+      observe.off('test');
+      observe.emit('test');
       assert.equal(calls, 2);
       
     });
 
 
-    test('if nothing passed, remove all esubs', function() {
+    test('if nothing passed, remove all eobserve', function() {
       var calls = 0;
-      var subs = new Subs();
+      var observe = new Observe();
 
-      var handler = subs.on('test', function() {
+      var handler = observe.on('test', function() {
         calls++;
       });
-      var handler2 = subs.on('test', function() {
+      var handler2 = observe.on('test', function() {
         calls++;
       });
 
-      subs.emit('test');
-      subs.off();
-      subs.emit('test');
+      observe.emit('test');
+      observe.off();
+      observe.emit('test');
       assert.equal(calls, 2);
       
     });
@@ -156,13 +156,13 @@ suite('subs', function() {
     test('should only fire event once', function() {
 
       var calls = 0;
-      var subs = new Subs();
+      var observe = new Observe();
 
-      subs.once('test', function() {
+      observe.once('test', function() {
         calls++;
       });
-      subs.emit('test');
-      subs.emit('test');
+      observe.emit('test');
+      observe.emit('test');
 
       assert.equal(calls, 1);
       
@@ -170,10 +170,10 @@ suite('subs', function() {
 
     test('should return fn', function() {
 
-      var subs = new Subs();
+      var observe = new Observe();
       var fn = function() { };
 
-      var ret = subs.once('test', fn);
+      var ret = observe.once('test', fn);
 
       assert.equal(typeof ret, 'function');
       
@@ -181,14 +181,14 @@ suite('subs', function() {
 
     test('should not be called if off is called before', function() {
 
-      var subs = new Subs();
+      var observe = new Observe();
       var fn = function() { };
 
-      var ret = subs.once('test', fn);
-      subs.off('test', ret);
+      var ret = observe.once('test', fn);
+      observe.off('test', ret);
 
       var called = 0;
-      subs.emit('test');
+      observe.emit('test');
 
       assert.equal(called, 0);
       
@@ -196,14 +196,14 @@ suite('subs', function() {
 
     test('should pass data from emit', function() {
 
-      var subs = new Subs();
+      var observe = new Observe();
       var data;
 
-      subs.once('test', function(arg) {
+      observe.once('test', function(arg) {
         data = arg;
       });
 
-      subs.emit('test', 123);
+      observe.emit('test', 123);
 
       assert.equal(data, 123); 
       
@@ -211,14 +211,14 @@ suite('subs', function() {
 
     test('should pass any amount of data from emit', function() {
 
-      var subs = new Subs();
+      var observe = new Observe();
       var data;
 
-      subs.once('test', function(arg1, arg2) {
+      observe.once('test', function(arg1, arg2) {
         data = arguments;
       });
 
-      subs.emit('test', 123, 456);
+      observe.emit('test', 123, 456);
 
       assert.equal(data.length, 2); 
       assert.equal(data[0], 123); 
@@ -229,9 +229,9 @@ suite('subs', function() {
     test('pass in 3rd param to set context', function() {
 
       var Klass = function() {
-        this.subs = new Subs();
+        this.observe = new Observe();
 
-        this.subs.once('event', this.method, this);
+        this.observe.once('event', this.method, this);
       }
       Klass.prototype.method = function(val) {
         this.methodCalled = true;
@@ -240,7 +240,7 @@ suite('subs', function() {
       }
 
       var cls = new Klass();
-      cls.subs.emit('event', 123);
+      cls.observe.emit('event', 123);
 
       assert.equal(cls.methodCalled, true);
       assert.equal(cls.methodContext, cls);
@@ -254,16 +254,16 @@ suite('subs', function() {
 
     test('should return true if something is bound', function() {
 
-      var subs = new Subs();
-      subs.on('test', function() {});
+      var observe = new Observe();
+      observe.on('test', function() {});
 
-      assert.ok(subs.hasHandlers('test'));
+      assert.ok(observe.hasHandlers('test'));
     });
 
     test('should return false if nothing is bound', function() {
-      var subs = new Subs();
+      var observe = new Observe();
 
-      assert.equal(subs.hasHandlers('test'), false);
+      assert.equal(observe.hasHandlers('test'), false);
     });
     
   });
@@ -272,7 +272,7 @@ suite('subs', function() {
   suite('mixin', function(done) {
     test('should add to object', function(done) {
       var obj = {};
-      Subs(obj);
+      Observe(obj);
       assert.equal(typeof obj.on, 'function');
       assert.equal(typeof obj.off, 'function');
       obj.on('test', done);
@@ -281,10 +281,10 @@ suite('subs', function() {
 
     test('should add to prototype', function(done) {
       var Class = function() {
-        Subs.call(this);
+        Observe.call(this);
       }
 
-      Subs(Class.prototype);
+      Observe(Class.prototype);
       var cls = new Class();
       assert.equal(typeof cls.on, 'function');
       assert.equal(typeof cls.off, 'function');

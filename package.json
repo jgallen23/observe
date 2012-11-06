@@ -1,12 +1,12 @@
 {
-  "name": "subs",
+  "name": "observe",
   "description": "an event lib for node and browser",
-  "homepage": "https://github.com/jgallen23/subs",
+  "homepage": "https://github.com/jgallen23/observe",
   "author": "Greg Allen <@jgaui> (http://jga.me)",
   "version": "0.0.5",
   "repository": {
     "type": "git",
-    "url": "https://github.com/jgallen23/subs.git"
+    "url": "https://github.com/jgallen23/observe.git"
   },
   "dependencies": {
     "currie": "0.0.3"
