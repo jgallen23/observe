@@ -11,13 +11,13 @@
     "url": "https://github.com/jgallen23/observe.git"
   },
   "dependencies": {
-    "currie": "0.0.3"
+    "currie": "0.1.0"
   },
   "devDependencies": {
-    "mocha": "~1.6.0",
-    "grunt-simple-mocha": "~0.2.0",
-    "grunt": "~0.3.17",
-    "grunt-clientside": "~0.1.0"
+    "mocha": "~3.2.0",
+    "grunt-simple-mocha": "~0.4.1",
+    "grunt": "~1.0.1",
+    "grunt-clientside": "~0.2.0"
   },
   "main": "index.js",
   "scripts": {
